@@ -49,6 +49,9 @@ jobs:
           # role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
           aws-region: ${{ env.REGION }}
 
+      - run: npm install
+      - run: npm run build
+
       - name: docker login
         run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 
