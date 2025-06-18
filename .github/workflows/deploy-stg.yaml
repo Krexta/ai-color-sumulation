@@ -55,16 +55,6 @@ jobs:
       # - name: docker login
       #   run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
       - name: sam build
-        working-directory: ./app
         run: sam build
       - name: sam deploy
-        working-directory: ./app
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file samconfig.toml --config-env ${{ env.ENV_NAME }}
-      # 下記は必要そう
-      # - name: Deployment s3
-      #   working-directory: ./app
-      #   run: aws s3 sync .next/static s3://stg-z-career-frontend-talent/guide/_next/static
-
-      # 下記はいらない？
-      # - name: Invalidate CloudFront Cache
-      #   run: aws cloudfront create-invalidation --distribution-id E33TE8RXCL6RKE --paths "/guide/*"
