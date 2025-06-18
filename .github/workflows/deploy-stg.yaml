@@ -11,8 +11,8 @@ permissions:
 
 env:
   ENV_NAME: stg
-  AWS_ROLE_SESSION_NAME: 0 ## あとで書く
-  AWS_ASSUME_ROLE: 0 ## あとで書く
+  # AWS_ROLE_SESSION_NAME: 0
+  AWS_ASSUME_ROLE: arn:aws:iam::688237778601:role/ai-color-simulator-deployer-stg
   REGION: ap-northeast-1
   FRONTEND_APP_DIR: app
   VERSION: ${{ github.sha }}
@@ -27,8 +27,8 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
-      - name: Copy .env file
-        run: cp frontend/guide/env/.env.example.${{ env.ENV_NAME }} frontend/guide/.env
+      # - name: Copy .env file
+      #   run: cp env/.env.example.${{ env.ENV_NAME }} frontend/guide/.env
 
       - run: npm
       - name: Install dependencies, and build as standalone app
@@ -47,7 +47,7 @@ jobs:
         id: aws_credentials
         with:
           role-to-assume: ${{ env.AWS_ASSUME_ROLE }}
-          role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
+          # role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
           aws-region: ${{ env.REGION }}
 
       - name: docker login
