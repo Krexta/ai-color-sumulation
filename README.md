@@ -1,1 +1,1 @@
-# ai-color-sumulation
+# ai-color-simulation
