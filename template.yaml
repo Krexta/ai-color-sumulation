@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  serverless app to deploy next app to aws lambda
+Parameters:
+  FunctionName:
+    Type: String
+
+Globals:
+  Function:
+    Timeout: 90
+
+Resources:
+  StreamingNextjsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Join ['-', ['streaming-next', !Ref FunctionName]]
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: RESPONSE_STREAM
+      PackageType: Image
+      MemorySize: 512
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          AWS_LWA_INVOKE_MODE: response_stream
+    Metadata:
+      DockerTag: v1
+      DockerContext: ./
+      Dockerfile: Dockerfile
+
+Outputs:
+  StreamingNextjsFunctionOutput:
+    Description: 'Streaming Nextjs Function ARN'
+    Value: !GetAtt StreamingNextjsFunction.Arn
+  StreamingNextjsFunctionUrlOutput:
+    Description: 'nextjs streaming response function url'
+    Value: !GetAtt StreamingNextjsFunctionUrl.FunctionUrl
