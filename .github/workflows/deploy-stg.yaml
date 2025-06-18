@@ -30,9 +30,8 @@ jobs:
       # - name: Copy .env file
       #   run: cp env/.env.example.${{ env.ENV_NAME }} frontend/guide/.env
 
-      - run: npm
-      - name: Install dependencies, and build as standalone app
-        run: npm i && npm run build
+      - name: Install dependencies, and build
+        run: npm install && npm run build
         working-directory: ./app
 
       - name: Generate short SHA
