@@ -1,0 +1,14 @@
+version = 0.1
+
+[stg.deploy.parameters]
+stack_name = "app-ai"
+resolve_s3 = true
+s3_prefix = "app-ai"
+region = "ap-northeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = [
+    "FunctionName=\"app-ai-stg\""
+]
+image_repositories = ["StreamingNextjsFunction=688237778601.dkr.ecr.ap-northeast-1.amazonaws.com/appai36c5eb7b/streamingnextjsfunctiona4f2f287repo"]
