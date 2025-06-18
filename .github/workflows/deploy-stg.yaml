@@ -30,9 +30,8 @@ jobs:
       # - name: Copy .env file
       #   run: cp env/.env.example.${{ env.ENV_NAME }} frontend/guide/.env
 
-      - name: Install dependencies, and build
-        run: npm install && npm run build
-        working-directory: ./app
+      - run: npm install
+      - run: npm run build
 
       - name: Generate short SHA
         id: short_sha
@@ -49,12 +48,8 @@ jobs:
           # role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
           aws-region: ${{ env.REGION }}
 
-      - run: npm install
-      - run: npm run build
-
       - name: docker login
         run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
-
       # - name: docker login
       #   run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
       - name: sam build
